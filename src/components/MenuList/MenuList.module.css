@@ -1,0 +1,15 @@
+.menu{
+padding: 30px 0;
+border-top: 3px solid #D1000F;
+border-bottom: 2px solid #E5E9ED;
+
+}
+
+.menu__list{
+  display: flex;
+  gap: 30px;
+}
+
+.menu__item {
+  cursor: pointer;
+}
