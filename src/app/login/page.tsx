@@ -1,62 +1,79 @@
-'use client'
+'use client';
 
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-import styles from './Logoin.module.css'
-import { useRouter } from 'next/navigation'
-import { login } from '@/api/auth'
+import { useRouter } from 'next/navigation';
+import { login } from '@/api/auth';
+import { validateLogin } from '@/utils/validateLogin';
 
-type Props = {}
+import styles from './Login.module.css';
+import { useAuthStore } from '@/store/authStore';
 
-const LoginPage = (props: Props) => {
+const LoginPage = () => {
   const router = useRouter();
-  
-const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
-const handleSubmit = async (e: React.FormEvent) => {
+  const { isLoading } = useAuthStore();
+
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState<{
+    username?: string;
+    password?: string;
+    common?: string;
+  }>({});
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const validationErrors = validateLogin(username, password);
+
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
     try {
       await login(username, password);
       router.push('/');
     } catch {
-      setError('Неверный логин или пароль');
+      setErrors({ common: 'Incorrect login or password' });
     }
   };
 
   return (
- <div> 
-      <h1> 
-        Login
-      </h1>
-       <div className={styles.container}>
-      <form className={styles.login__form} onSubmit={handleSubmit}>
-        <h2>Вход</h2>
-        {error && <div className={styles.error__message}>{error}</div>}
-        <div className={styles.form__group}>
+    <div className={styles.wrapper}>
+      <form className={styles.form} onSubmit={handleSubmit} noValidate>
+        <h2 className={styles.title}>Вход</h2>
+
+        <div className={styles.field}>
           <input
             type="text"
-            id="username"
+            placeholder="Username"
             value={username}
-            onChange={(e)=> setUsername(e.target.value)}
-            placeholder="Введите имя пользователя"
+            onChange={(e) => setUsername(e.target.value)}
+            className={`${styles.input} ${errors.username ? styles.errorInput : ''}`}
           />
+          {errors.username && <p className={styles.errorText}>{errors.username}</p>}
         </div>
-        <div className={styles.form__group}>
+
+        <div className={styles.field}>
           <input
             type="password"
-            id="password"
+            placeholder="Password"
             value={password}
-            onChange={(e)=> setPassword(e.target.value)}
-            placeholder="Введите пароль"
+            onChange={(e) => setPassword(e.target.value)}
+            className={`${styles.input} ${errors.password ? styles.errorInput : ''}`}
           />
+          {errors.password && <p className={styles.errorText}>{errors.password}</p>}
+          {errors.common && <p className={styles.errorText}>{errors.common}</p>}
         </div>
-        <button type="submit" className={styles.submit__button}>Войти</button>
+
+        <button type="submit" disabled={isLoading} className={styles.button}>
+          {isLoading ? 'In progress...' : 'Login'}
+        </button>
       </form>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
