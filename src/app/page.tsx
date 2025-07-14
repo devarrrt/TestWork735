@@ -2,8 +2,7 @@
 
 import { useEffect } from 'react';
 
-import { MenuList } from '@/components';
-import { ProductCard } from '@/components/ProductCard';
+import { ProductCard, MenuList } from "@/components";
 import { useProductStore } from '@/store/productStore';
 import { useAuthStore } from '@/store/authStore';
 
@@ -15,13 +14,16 @@ export default function HomePage() {
     fetchProducts();
   }, [fetchProducts]);
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   const name = localStorage.getItem('name');
-  //   if (token && name) {
-  //     setUser({ name, token });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      const name = localStorage.getItem('name');
+
+      if (token && name) {
+        setUser({ name, token });
+      }
+    }
+  }, []);
 
   return (
     <>

@@ -14,5 +14,5 @@ export const useAuthStore = create<AuthState>((set) => ({
     localStorage.removeItem('name');
     set({ user: null });
   },
-  setLoading: (val) => set({ isLoading: val }),
+  setLoading: (value) => set({ isLoading: value }),
 }));

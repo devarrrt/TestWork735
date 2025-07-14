@@ -1,12 +1,12 @@
-'use client'
+"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "tabler-icons-react";
 
-import styles from "./MenuList.module.css";
+import styles from "./MenuList.module.scss";
 
-import "../../styles/globals.css";
+import "../../styles/globals.scss";
 
 const menuItems = [
   "Home",

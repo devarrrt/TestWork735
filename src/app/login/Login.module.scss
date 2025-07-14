@@ -1,0 +1,72 @@
+$border-color: #ccc;
+$border-color-focus: #1e1f29;
+$error-color: #d1000f;
+$button-color-bg: #1e1f29;
+$button-color-hover-bg: #1e1f29;
+
+$radius: 6px;
+$padding-base: 0.75rem;
+$font-size-base: 1rem;
+
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  padding: 2rem;
+  width: 100%;
+  max-width: 450px;
+}
+
+.title {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.input {
+  width: 100%;
+  padding: $padding-base;
+  font-size: $font-size-base;
+  border: 1px solid $border-color;
+  border-radius: $radius;
+  transition: border 0.2s;
+
+  &:focus {
+    outline: none;
+    border-color: $border-color-focus;
+  }
+
+  &.errorInput {
+    border-color: $error-color;
+  }
+}
+
+.errorText {
+  margin-top: 0.25rem;
+  color: $error-color;
+  font-size: 0.875rem;
+}
+
+.button {
+  width: 100%;
+  padding: $padding-base;
+  background-color: $button-color-bg;
+  color: white;
+  font-size: $font-size-base;
+  border: none;
+  border-radius: $radius;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: $button-color-hover-bg;
+  }
+}

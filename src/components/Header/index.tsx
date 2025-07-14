@@ -8,7 +8,7 @@ import Image from "next/image";
 
 import { useAuthStore } from "@/store/authStore";
 
-import styles from "./Header.module.css";
+import styles from "./Header.module.scss";
 
 const Header = () => {
   const router = useRouter();

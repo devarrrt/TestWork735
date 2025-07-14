@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import { useRouter } from 'next/navigation';
-import { login } from '@/api/auth';
-import { validateLogin } from '@/utils/validateLogin';
+import { useRouter } from "next/navigation";
+import { login } from "@/api/auth";
+import { validateLogin } from "@/utils/validateLogin";
+import { useAuthStore } from "@/store/authStore";
 
-import styles from './Login.module.css';
-import { useAuthStore } from '@/store/authStore';
+import styles from "./Login.module.scss";
 
 const LoginPage = () => {
   const router = useRouter();
 
   const { isLoading } = useAuthStore();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{
     username?: string;
     password?: string;
@@ -34,9 +34,9 @@ const LoginPage = () => {
     setErrors({});
     try {
       await login(username, password);
-      router.push('/');
+      router.push("/");
     } catch {
-      setErrors({ common: 'Incorrect login or password' });
+      setErrors({ common: "Incorrect login or password" });
     }
   };
 
@@ -51,9 +51,11 @@ const LoginPage = () => {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className={`${styles.input} ${errors.username ? styles.errorInput : ''}`}
+            className={`${styles.input} ${errors.username ? styles.errorInput : ""}`}
           />
-          {errors.username && <p className={styles.errorText}>{errors.username}</p>}
+          {errors.username && (
+            <p className={styles.errorText}>{errors.username}</p>
+          )}
         </div>
 
         <div className={styles.field}>
@@ -62,14 +64,16 @@ const LoginPage = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={`${styles.input} ${errors.password ? styles.errorInput : ''}`}
+            className={`${styles.input} ${errors.password ? styles.errorInput : ""}`}
           />
-          {errors.password && <p className={styles.errorText}>{errors.password}</p>}
+          {errors.password && (
+            <p className={styles.errorText}>{errors.password}</p>
+          )}
           {errors.common && <p className={styles.errorText}>{errors.common}</p>}
         </div>
 
         <button type="submit" disabled={isLoading} className={styles.button}>
-          {isLoading ? 'In progress...' : 'Login'}
+          {isLoading ? "In progress..." : "Login"}
         </button>
       </form>
     </div>

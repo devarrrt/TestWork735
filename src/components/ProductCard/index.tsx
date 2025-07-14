@@ -1,9 +1,11 @@
-import Image from 'next/image';
+"use client";
 
-import { Product } from '@/types/product';
-import { useAuthStore } from '@/store/authStore';
+import Image from "next/image";
 
-import styles from './ProductCard.module.css';
+import { Product } from "@/types/product";
+import { useAuthStore } from "@/store/authStore";
+
+import styles from "./ProductCard.module.scss";
 interface ProductCardProps {
   product: Product;
 }

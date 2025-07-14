@@ -1,10 +1,14 @@
+$background: #ffffff;
+$foreground-dark: #ededed;
+$loader-color: #d1000f;
+
 :root {
-  --background: #ffffff;
+  --background: #{$background};
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground: #ededed;
+    --foreground: #{$foreground-dark};
   }
 }
 
@@ -13,6 +17,7 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
   height: 100%;
+  box-sizing: border-box;
 }
 
 body {
@@ -22,27 +27,17 @@ body {
   font-family: sans-serif;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-figure,
-picture {
+h1, h2, h3, h4, h5, h6,
+p, figure, picture {
   margin: 0;
 }
 
-img,
-picture {
+img, picture {
   max-width: 100%;
   display: block;
 }
@@ -58,10 +53,7 @@ a {
   color: inherit;
 }
 
-input,
-button,
-textarea,
-select {
+input, button, textarea, select {
   font: inherit;
   background: none;
   border: none;
@@ -84,13 +76,18 @@ button {
 .products {
   display: flex;
   flex-direction: column;
-}
+  
+  &-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+    padding: 2rem 0;
 
-.products-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1rem;
-  padding: 2rem 0;
+    @media (max-width: 576px) {
+      grid-template-columns: 1fr;
+      justify-items: center;
+    }
+  }
 }
 
 .loader {
@@ -100,8 +97,7 @@ button {
   display: block;
   margin: 15px auto;
   position: relative;
-  color: #d1000f;
-  box-sizing: border-box;
+  color: $loader-color;
   animation: animloader 2s linear infinite;
 }
 
